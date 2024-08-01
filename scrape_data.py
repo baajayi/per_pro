@@ -22,7 +22,7 @@ delay_seconds = 5
 if not os.path.exists(base_dir):
     os.makedirs(base_dir)
 def _is_talk_url(url):
-    """A talk URL has 6 components (first component is empty) and last component does not end in -session."""
+    """A talk URL has 6 components (the first component is empty) and last component does not end in -session."""
     path_components = urlparse(url).path.split('/')
     return len(path_components) == 6 and not path_components[-1].endswith('-session')
 
