@@ -1,5 +1,4 @@
 from flask import Flask, request, render_template
-from llama_index.core import Document
 from llama_index.core.node_parser import SentenceSplitter
 from llama_index.core import SimpleDirectoryReader, VectorStoreIndex
 from dotenv import load_dotenv, find_dotenv
