@@ -2,7 +2,6 @@ from flask import Flask, request, render_template
 from llama_index.core import Document
 from llama_index.core.node_parser import SentenceSplitter
 from llama_index.core import SimpleDirectoryReader, VectorStoreIndex
-from llama_index.core import Settings
 from dotenv import load_dotenv, find_dotenv
 import os
 
@@ -13,7 +12,6 @@ app = Flask(__name__)
 
 # Load documents and create index
 documents = SimpleDirectoryReader("./data").load_data()
-Settings.text_splitter = SentenceSplitter(chunk_size=1024, chunk_overlap=20)
 index = VectorStoreIndex.from_documents(
     documents,
     transformations=[SentenceSplitter(chunk_size=1024, chunk_overlap=20)],
