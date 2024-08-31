@@ -9,3 +9,4 @@ pymilvus
 openai
 llama_index.vector_stores.pinecone
 pinecone
+transformers
