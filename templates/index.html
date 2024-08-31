@@ -49,8 +49,7 @@
                 <h1>04/24 General Conference Bot</h1>
             </div>
             <div class="card-body">
-                <img src="	https://www.churchofjesuschrist.org/imgs/c730fd12d…7649912008ddf828afd93403/full/60%2C/0/default.png
-                " class="placeholder-image" alt="Placeholder Image">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS7syPsIKw1mISWbpa_F4nVrKw0C_Wm8rv94e4NNEtAEZZhOZ2essTWgOs&s" class="placeholder-image" alt="conference center">
                 <form method="post" action="/">
                     <div class="form-group">
                         <label for="query">Enter your query:</label>
@@ -66,9 +65,21 @@
                     <h5>Query:</h5>
                     <p>{{ query }}</p>
                 </div>
+                {% endif %}
+
+                {% if results %}
                 <div class="mt-4 response">
                     <h5>Response:</h5>
                     <p>{{ response }}</p>
+                    <ul class="list-group">
+                        {% for result in results %}
+                        <li class="list-group-item">
+                            <!-- <p><strong>Response:</strong> {{ result.content }}</p> -->
+                            <p><strong>URL:</strong> <a href="{{ result.url }}" target="_blank">{{ result.url }}</a></p>
+                            <p><strong>Author:</strong> {{ result.author }}</p>
+                        </li>
+                        {% endfor %}
+                    </ul>
                 </div>
                 {% endif %}
             </div>
