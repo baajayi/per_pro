@@ -10,11 +10,11 @@ from llama_index.core import VectorStoreIndex, SimpleDirectoryReader
 from llama_index.vector_stores.pinecone import PineconeVectorStore
 from llama_index.core.node_parser import SemanticSplitterNodeParser
 from llama_index.embeddings.openai import OpenAIEmbedding
-from IPython.display import Markdown, display
+# from IPython.display import Markdown, display
 from dotenv import load_dotenv, find_dotenv
 
-logging.basicConfig(stream=sys.stdout, level=logging.INFO)
-logging.getLogger().addHandler(logging.StreamHandler(stream=sys.stdout))
+# logging.basicConfig(stream=sys.stdout, level=logging.INFO)
+# logging.getLogger().addHandler(logging.StreamHandler(stream=sys.stdout))
 _=load_dotenv(find_dotenv())
 
 client = OpenAI()
@@ -142,14 +142,14 @@ query_engine.update_prompts(
 prompts_dict = query_engine.get_prompts()
 query_engine = vector_index.as_query_engine(response_mode="tree_summarize", similarity_top_k=5, model="gpt-4o-mini")
 
-def display_prompt_dict(prompts_dict):
-    for k, p in prompts_dict.items():
-        text_md = f"**Prompt Key**: {k}<br>" f"**Text:** <br>"
-        display(Markdown(text_md))
-        print(p.get_template())
-        display(Markdown("<br><br>"))
+# def display_prompt_dict(prompts_dict):
+#     for k, p in prompts_dict.items():
+#         text_md = f"**Prompt Key**: {k}<br>" f"**Text:** <br>"
+#         display(Markdown(text_md))
+#         print(p.get_template())
+#         display(Markdown("<br><br>"))
 
-display_prompt_dict(prompts_dict)
+# display_prompt_dict(prompts_dict)
 
 
 app = Flask(__name__)
