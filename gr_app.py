@@ -102,7 +102,7 @@ else:
     hy_sema_index = pc.Index(index_name)
     vector_index = VectorStoreIndex(nodes=[], embed_model=OpenAIEmbedding(model="text-embedding-ada-002"), storage_context=StorageContext.from_defaults(vector_store=PineconeVectorStore(pinecone_index=hy_sema_index, add_sparse_vector=True)))
 
-query_engine = vector_index.as_query_engine(response_mode="tree_summarize", model="gpt-4o-mini", similarity_top_k=5)
+query_engine = vector_index.as_query_engine(response_mode="tree_summarize", model="gpt-4o-mini", similarity_top_k=2)
 meta_tmpl_str ="""
 You are an AI assistant tasked with answering questions about the April 2024 General Conference of the Church of Jesus Christ of Latter-Day Saints. You will be provided with the content of the conference talks and a question to answer. Your goal is to provide accurate and relevant information based solely on the content of these talks.
 
@@ -140,7 +140,7 @@ query_engine.update_prompts(
 )
 
 prompts_dict = query_engine.get_prompts()
-query_engine = vector_index.as_query_engine(response_mode="tree_summarize", similarity_top_k=5, model="gpt-4o-mini")
+query_engine = vector_index.as_query_engine(response_mode="tree_summarize", similarity_top_k=2, model="gpt-4o-mini")
 
 # def display_prompt_dict(prompts_dict):
 #     for k, p in prompts_dict.items():
@@ -152,6 +152,72 @@ query_engine = vector_index.as_query_engine(response_mode="tree_summarize", simi
 # display_prompt_dict(prompts_dict)
 
 
+
+# import pandas as pd
+
+# def generate_answers(input_csv_path, output_csv_path):
+#     """
+#     Reads a CSV file with columns 'question', 'answer', and 'quotes', uses the query engine
+#     to generate an answer for each question, appends the generated answer to a new column
+#     'generated answer', and writes the updated DataFrame to a new CSV file.
+
+#     Args:
+#         input_csv_path (str): The path to the input CSV file.
+#         output_csv_path (str): The path to the output CSV file.
+
+#     Returns:
+#         None
+#     """
+#     # Read the CSV file into a DataFrame
+#     df = pd.read_csv(input_csv_path, encoding='latin1')
+    
+#     # Check if 'question' column exists
+#     if 'question' not in df.columns:
+#         print("The CSV file must contain a 'question' column.")
+#         return
+    
+#     # Initialize a list to store generated answers
+#     generated_answers = []
+#     sources = []
+    
+#     # Iterate over each row in the DataFrame
+#     for index, row in df.iterrows():
+#         question = row['question']
+#         print(f"Processing question {index + 1}/{len(df)}: {question}")
+        
+#         # Use the query engine to generate an answer
+#         try:
+#             response = query_engine.query(question)
+#             generated_answer = response.response  # Extract the answer text from the response
+#             source = '\n\n\n'.join([node.text for node in response.source_nodes])
+#         except Exception as e:
+#             print(f"An error occurred while processing question '{question}': {e}")
+#             generated_answer = None  # or you can set a default value or error message
+        
+#         # Append the generated answer to the list
+#         generated_answers.append(generated_answer)
+#         sources.append(source)
+    
+#     # Add the 'generated answer' column to the DataFrame
+#     df['generated answer'] = generated_answers
+#     df['Sources'] = sources
+    
+#     # Write the updated DataFrame to a new CSV file
+#     df.to_csv(output_csv_path, index=False)
+    
+#     print(f"Generated answers have been saved to {output_csv_path}")
+
+
+# # Define the input and output CSV file paths
+# input_csv = 'que_and_a.csv'
+# output_csv = 'output_with_generated_answers.csv'
+
+# # Call the function to generate answers
+# generate_answers(input_csv, output_csv)
+
+
+
+
 app = Flask(__name__)
 
 @app.route('/', methods=['GET', 'POST'])
@@ -159,6 +225,7 @@ def index():
     if request.method == 'POST':
         query = request.form['query']
         response = query_engine.query(query)
+        print(response.source_nodes)
 
         # Extracting metadata and response content
         results = []
