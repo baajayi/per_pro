@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>04/24 General Conference Bot</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            margin-top: 50px;
+            max-width: 600px;
+        }
+        .card {
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .card-header {
+            background-color: #007bff;
+            color: white;
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
+        }
+        .form-control, .btn {
+            border-radius: 50px;
+        }
+        .form-control {
+            height: 100px; /* Adjust height */
+            font-size: 18px; /* Adjust font size */
+        }
+        .placeholder-image {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: 50%;
+        }
+        .response {
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="card-header text-center">
+                <h1>04/24 General Conference Bot</h1>
+            </div>
+            <div class="card-body">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS7syPsIKw1mISWbpa_F4nVrKw0C_Wm8rv94e4NNEtAEZZhOZ2essTWgOs&s" class="placeholder-image" alt="conference center">
+                <form method="post" action="/">
+                    <div class="form-group">
+                        <label for="query">Enter your query:</label>
+                        <input type="text" class="form-control" id="query" name="query" required>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+
+                {% if query %}
+                <div class="mt-4">
+                    <h5>Query:</h5>
+                    <p>{{ query }}</p>
+                </div>
+                {% endif %}
+
+                {% if results %}
+                <div class="mt-4 response">
+                    <h5>Response:</h5>
+                    <p>{{ response }}</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
